@@ -1,4 +1,5 @@
 import SummaryCard from "../components/dashboard/SummaryCard";
+import PageHeader from "../components/PageHeader";
 import {
   subjects,
   assignments,
@@ -24,7 +25,7 @@ const todayTasks = studyTasks.filter(
 ).length;
   return (
     <div>
-      <h2 className="mb-6 text-2xl font-bold">Dashboard</h2>
+      <PageHeader title="Dashboard" />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <SummaryCard
