@@ -3,6 +3,7 @@ import { calculateAttendancePercentage } from "../../utils/attendance";
 import AttendanceProgress from "./AttendanceProgress";
 import { getAttendanceStatus } from "../../utils/attendanceStatus";
 import Badge from "../Badge";
+import Card from "../Card";
 import type { Subject } from "../../types/study";
 
 type SubjectCardProps = {
@@ -21,7 +22,7 @@ const classesNeeded = classesNeededFor75Percent(
 );
 
  return (
-  <div className="rounded-xl bg-white p-5 shadow-sm">
+  <Card>
     <h3 className="text-lg font-semibold">{subject.name}</h3>
 
     <p className="mt-2 text-sm text-slate-600">
@@ -44,7 +45,7 @@ const classesNeeded = classesNeededFor75Percent(
             classesNeeded > 1 ? "es" : ""
           } to reach 75%`}
     </p>
-  </div>
+  </Card>
 );
 }
 
