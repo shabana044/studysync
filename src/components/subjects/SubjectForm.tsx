@@ -1,3 +1,4 @@
+import Input from "../Input";
 import { useState } from "react";
 import type { NewSubject } from "../../types/study";
 type SubjectFormProps = {
@@ -32,38 +33,27 @@ return (
           <label className="mb-1 block text-sm font-medium">
             Subject Name
           </label>
-          <input
-  type="text"
+          <Input
+  label="Subject Name"
   value={name}
-  onChange={(e) => setName(e.target.value)}
-  className="w-full rounded-lg border border-slate-300 p-2"
   placeholder="Example: Operating Systems"
+  onChange={setName}
 />
-        </div>
 
-        <div>
-          <label className="mb-1 block text-sm font-medium">
-            Total Classes
-          </label>
-          <input
+<Input
+  label="Total Classes"
   type="number"
   value={totalClasses}
-  onChange={(e) => setTotalClasses(e.target.value)}
-  className="w-full rounded-lg border border-slate-300 p-2"
   placeholder="Example: 30"
+  onChange={setTotalClasses}
 />
-        </div>
 
-        <div>
-          <label className="mb-1 block text-sm font-medium">
-            Attended Classes
-          </label>
-         <input
+<Input
+  label="Attended Classes"
   type="number"
   value={attendedClasses}
-  onChange={(e) => setAttendedClasses(e.target.value)}
-  className="w-full rounded-lg border border-slate-300 p-2"
   placeholder="Example: 25"
+  onChange={setAttendedClasses}
 />
         </div>
 
