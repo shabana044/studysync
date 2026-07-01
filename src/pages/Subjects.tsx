@@ -3,6 +3,7 @@ import { subjects as sampleSubjects } from "../data/sampleData";
 import Button from "../components/Button";
 import SubjectForm from "../components/subjects/SubjectForm";
 import SubjectCard from "../components/subjects/SubjectCard";
+import PageHeader from "../components/PageHeader";
 import type { Subject, NewSubject } from "../types/study";
 import { loadSubjects, saveSubjects } from "../utils/storage";
 
@@ -33,13 +34,14 @@ function Subjects() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Subjects</h2>
-
-        <Button onClick={() => setShowForm(true)}>
-          Add Subject
-        </Button>
-      </div>
+      <PageHeader
+  title="Subjects"
+  action={
+    <Button onClick={() => setShowForm(true)}>
+      Add Subject
+    </Button>
+  }
+/>
 
       {showForm && (
         <SubjectForm
