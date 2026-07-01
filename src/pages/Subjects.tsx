@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import SubjectForm from "../components/subjects/SubjectForm";
 import SubjectCard from "../components/subjects/SubjectCard";
 import PageHeader from "../components/PageHeader";
+import EmptyState from "../components/EmptyState";
 import type { Subject, NewSubject } from "../types/study";
 import { loadSubjects, saveSubjects } from "../utils/storage";
 
@@ -50,14 +51,18 @@ function Subjects() {
         />
       )}
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {subjectList.map((subject) => (
-          <SubjectCard
-            key={subject.id}
-            subject={subject}
-          />
-        ))}
-      </div>
+      {subjectList.length === 0 ? (
+  <EmptyState message="No subjects added yet." />
+) : (
+  <div className="grid gap-4 md:grid-cols-2">
+    {subjectList.map((subject) => (
+      <SubjectCard
+        key={subject.id}
+        subject={subject}
+      />
+    ))}
+  </div>
+)}
     </div>
   );
 }
