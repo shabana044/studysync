@@ -1,4 +1,5 @@
 import Input from "../Input";
+import ButtonGroup from "../ButtonGroup";
 import { useState } from "react";
 import type { NewSubject } from "../../types/study";
 type SubjectFormProps = {
@@ -57,7 +58,7 @@ return (
 />
         </div>
 
-        <div className="flex gap-3">
+        <ButtonGroup>
           <button
             type="submit"
             className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
@@ -72,7 +73,7 @@ return (
           >
             Cancel
           </button>
-        </div>
+        </ButtonGroup>
       </form>
     </div>
   );
