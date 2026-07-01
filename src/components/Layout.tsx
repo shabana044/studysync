@@ -1,23 +1,24 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet } from "react-router-dom";
 
 function Layout() {
   return (
-    <div>
-      <header>
-        <h1>StudySync</h1>
-        <nav>
-          <Link to="/">Dashboard</Link> |{' '}
-          <Link to="/subjects">Subjects</Link> |{' '}
-          <Link to="/assignments">Assignments</Link> |{' '}
+    <div className="min-h-screen bg-slate-100">
+      <header className="bg-white shadow-md p-6">
+        <h1 className="text-3xl font-bold text-blue-600">StudySync</h1>
+
+        <nav className="mt-4 flex gap-4">
+          <Link to="/">Dashboard</Link>
+          <Link to="/subjects">Subjects</Link>
+          <Link to="/assignments">Assignments</Link>
           <Link to="/exams">Exams</Link>
         </nav>
       </header>
 
-      <main>
+      <main className="p-6">
         <Outlet />
       </main>
     </div>
-  )
+  );
 }
 
-export default Layout
+export default Layout;
