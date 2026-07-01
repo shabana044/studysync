@@ -5,6 +5,12 @@ export type Subject = {
   attendedClasses: number
 }
 
+export type NewSubject = {
+  name: string
+  totalClasses: number
+  attendedClasses: number
+}
+
 export type Assignment = {
   id: string
   title: string

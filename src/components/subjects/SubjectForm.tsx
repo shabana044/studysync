@@ -1,17 +1,33 @@
 import { useState } from "react";
+import type { NewSubject } from "../../types/study";
 type SubjectFormProps = {
   onClose: () => void;
+  onAddSubject: (subject: NewSubject) => void;
 };
 
-function SubjectForm({ onClose }: SubjectFormProps) {
+function SubjectForm({ onClose, onAddSubject }: SubjectFormProps) {
     const [name, setName] = useState("");
 const [totalClasses, setTotalClasses] = useState("");
 const [attendedClasses, setAttendedClasses] = useState("");
-  return (
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+
+  onAddSubject({
+    name,
+    totalClasses: Number(totalClasses),
+    attendedClasses: Number(attendedClasses),
+  });
+
+  setName("");
+  setTotalClasses("");
+  setAttendedClasses("");
+  onClose();
+}
+return (
     <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50 p-4">
       <h3 className="mb-4 text-lg font-semibold">Add Subject</h3>
 
-      <form className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="mb-1 block text-sm font-medium">
             Subject Name
