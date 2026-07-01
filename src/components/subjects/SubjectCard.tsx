@@ -1,3 +1,4 @@
+import { calculateAttendancePercentage } from "../../utils/attendance";
 import AttendanceProgress from "./AttendanceProgress";
 import type { Subject } from "../../types/study";
 
@@ -6,9 +7,10 @@ type SubjectCardProps = {
 };
 
 function SubjectCard({ subject }: SubjectCardProps) {
-  const percentage = Math.round(
-    (subject.attendedClasses / subject.totalClasses) * 100
-  );
+  const percentage = calculateAttendancePercentage(
+  subject.attendedClasses,
+  subject.totalClasses
+);
 
   return (
   <div className="rounded-xl bg-white p-5 shadow-sm">
