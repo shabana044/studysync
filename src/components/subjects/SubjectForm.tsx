@@ -1,3 +1,4 @@
+import FormTitle from "../FormTitle";
 import Input from "../Input";
 import ButtonGroup from "../ButtonGroup";
 import { useState } from "react";
@@ -27,7 +28,7 @@ const [attendedClasses, setAttendedClasses] = useState("");
 }
 return (
     <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
-      <h3 className="mb-4 text-lg font-semibold">Add Subject</h3>
+      <FormTitle title="Add Subject" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
