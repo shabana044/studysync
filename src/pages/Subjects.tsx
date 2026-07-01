@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import SubjectForm from "../components/subjects/SubjectForm";
 import SubjectCard from "../components/subjects/SubjectCard";
 import PageHeader from "../components/PageHeader";
+import Modal from "../components/Modal";
 import EmptyState from "../components/EmptyState";
 import type { Subject, NewSubject } from "../types/study";
 import { loadSubjects, saveSubjects } from "../utils/storage";
@@ -44,12 +45,12 @@ function Subjects() {
   }
 />
 
-      {showForm && (
-        <SubjectForm
-          onClose={() => setShowForm(false)}
-          onAddSubject={handleAddSubject}
-        />
-      )}
+      <Modal open={showForm}>
+  <SubjectForm
+    onClose={() => setShowForm(false)}
+    onAddSubject={handleAddSubject}
+  />
+</Modal>
 
       {subjectList.length === 0 ? (
   <EmptyState message="No subjects added yet." />

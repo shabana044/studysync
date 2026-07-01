@@ -26,7 +26,7 @@ const [attendedClasses, setAttendedClasses] = useState("");
   onClose();
 }
 return (
-    <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50 p-4">
+    <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
       <h3 className="mb-4 text-lg font-semibold">Add Subject</h3>
 
       <form onSubmit={handleSubmit} className="space-y-4">
