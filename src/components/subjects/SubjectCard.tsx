@@ -1,6 +1,7 @@
 import { classesNeededFor75Percent } from "../../utils/attendancePrediction";
 import { calculateAttendancePercentage } from "../../utils/attendance";
 import AttendanceProgress from "./AttendanceProgress";
+import { getAttendanceStatus } from "../../utils/attendanceStatus";
 import type { Subject } from "../../types/study";
 
 type SubjectCardProps = {
@@ -12,6 +13,7 @@ function SubjectCard({ subject }: SubjectCardProps) {
   subject.attendedClasses,
   subject.totalClasses
 );
+const status = getAttendanceStatus(percentage);
 const classesNeeded = classesNeededFor75Percent(
   subject.attendedClasses,
   subject.totalClasses
@@ -26,6 +28,10 @@ const classesNeeded = classesNeededFor75Percent(
     </p>
 
     <AttendanceProgress percentage={percentage} />
+
+<p className={`mt-3 text-sm font-medium ${status.color}`}>
+  {status.label}
+</p>
 
     <p className="mt-3 text-sm text-slate-600">
       {classesNeeded === 0
