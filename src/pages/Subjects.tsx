@@ -1,14 +1,22 @@
-import { useState } from "react";
-import { subjects } from "../data/sampleData";
+import { useEffect, useState } from "react";
+import { subjects as sampleSubjects } from "../data/sampleData";
 import Button from "../components/Button";
 import SubjectForm from "../components/subjects/SubjectForm";
 import type { Subject, NewSubject } from "../types/study";
+import { loadSubjects, saveSubjects } from "../utils/storage";
 
 function Subjects() {
   const [showForm, setShowForm] = useState(false);
-  const [subjectList, setSubjectList] = useState<Subject[]>(subjects);
+  const savedSubjects = loadSubjects();
 
+const [subjectList, setSubjectList] = useState<Subject[]>(
+  savedSubjects.length > 0 ? savedSubjects : sampleSubjects
+);
+useEffect(() => {
+  saveSubjects(subjectList);
+}, [subjectList]);
   function handleAddSubject(newSubject: NewSubject) {
+  
     const subject: Subject = {
       id: Date.now().toString(),
       ...newSubject,
