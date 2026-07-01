@@ -2,6 +2,7 @@ import { classesNeededFor75Percent } from "../../utils/attendancePrediction";
 import { calculateAttendancePercentage } from "../../utils/attendance";
 import AttendanceProgress from "./AttendanceProgress";
 import { getAttendanceStatus } from "../../utils/attendanceStatus";
+import Badge from "../Badge";
 import type { Subject } from "../../types/study";
 
 type SubjectCardProps = {
@@ -29,9 +30,12 @@ const classesNeeded = classesNeededFor75Percent(
 
     <AttendanceProgress percentage={percentage} />
 
-<p className={`mt-3 text-sm font-medium ${status.color}`}>
-  {status.label}
-</p>
+<div className="mt-3">
+  <Badge
+    text={status.label}
+    className={status.color}
+  />
+</div>
 
     <p className="mt-3 text-sm text-slate-600">
       {classesNeeded === 0
