@@ -88,16 +88,15 @@ export function resetStudySyncData() {
 
   if (!confirmed) return;
 
-  [
-  SUBJECTS_KEY,
-  ASSIGNMENTS_KEY,
-  EXAMS_KEY,
-  TASKS_KEY,
-  GOALS_KEY,
-  STREAK_KEY,
-  "studysync-reminder-last-shown",
-  "studysync-theme",
-].forEach((key) => localStorage.removeItem(key));
+  localStorage.setItem(SUBJECTS_KEY, JSON.stringify([]));
+  localStorage.setItem(ASSIGNMENTS_KEY, JSON.stringify([]));
+  localStorage.setItem(EXAMS_KEY, JSON.stringify([]));
+  localStorage.setItem(TASKS_KEY, JSON.stringify([]));
+  localStorage.setItem(GOALS_KEY, JSON.stringify([]));
+  localStorage.setItem(STREAK_KEY, JSON.stringify(0));
+
+  localStorage.removeItem("studysync-reminder-last-shown");
+  localStorage.removeItem("studysync-theme");
 
   alert("All StudySync data has been deleted.");
   window.location.reload();
