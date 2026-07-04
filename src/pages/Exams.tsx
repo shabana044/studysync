@@ -9,8 +9,14 @@ import SearchBar from "../components/SearchBar";
 import SortSelect from "../components/SortSelect";
 import ExamCard from "../components/exams/ExamCard";
 import ExamForm from "../components/exams/ExamForm";
+import { exams as sampleExams } from "../data/sampleData";
 import type { Exam, NewExam } from "../types/study";
-import { loadExams, loadSubjects, saveExams } from "../utils/storage";
+import {
+  EXAMS_KEY,
+  loadExams,
+  loadSubjects,
+  saveExams,
+} from "../utils/storage";
 
 function Exams() {
   const [showForm, setShowForm] = useState(false);
@@ -18,20 +24,25 @@ function Exams() {
   const [sortBy, setSortBy] = useState("date");
   const [editingExam, setEditingExam] = useState<Exam | null>(null);
   const [examToDelete, setExamToDelete] = useState<Exam | null>(null);
-  const savedExams = loadExams();
-  const savedSubjects = loadSubjects();
 
-  const [examList, setExamList] = useState<Exam[]>(savedExams);
+  const [examList, setExamList] = useState<Exam[]>(() => {
+    const hasSavedExams = localStorage.getItem(EXAMS_KEY) !== null;
+
+    return hasSavedExams ? loadExams() : sampleExams;
+  });
 
   useEffect(() => {
     saveExams(examList);
   }, [examList]);
 
-  const subjectOptions = useMemo(() => savedSubjects.map((subject) => subject.name), [savedSubjects]);
+  const subjectOptions = useMemo(() => {
+    return loadSubjects().map((subject) => subject.name);
+  }, []);
 
   const filteredExams = [...examList]
     .filter((exam) => {
       const query = search.toLowerCase();
+
       return (
         exam.subject.toLowerCase().includes(query) ||
         exam.examName.toLowerCase().includes(query)
@@ -42,13 +53,11 @@ function Exams() {
         return a.subject.localeCompare(b.subject);
       }
 
-      if (sortBy === "date") {
-        return a.date.localeCompare(b.date);
+      if (sortBy === "name") {
+        return a.examName.localeCompare(b.examName);
       }
 
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateA - dateB;
+      return a.date.localeCompare(b.date);
     });
 
   function handleAddExam(newExam: NewExam) {
@@ -104,7 +113,9 @@ function Exams() {
       <PageHeader
         title="Exams"
         action={
-          <Button onClick={() => setShowForm(true)}>Add Exam</Button>
+          <Button onClick={() => setShowForm(true)}>
+            Add Exam
+          </Button>
         }
       />
 
@@ -144,7 +155,7 @@ function Exams() {
             options={[
               { value: "date", label: "Sort by Nearest Exam" },
               { value: "subject", label: "Sort by Subject" },
-              { value: "name", label: "Sort by Date" },
+              { value: "name", label: "Sort by Exam Name" },
             ]}
           />
 
