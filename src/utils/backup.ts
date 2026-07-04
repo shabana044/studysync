@@ -88,7 +88,16 @@ export function resetStudySyncData() {
 
   if (!confirmed) return;
 
-  localStorage.clear();
+  [
+  "studysync-subjects",
+  "studysync-assignments",
+  "studysync-exams",
+  "studysync-tasks",
+  "studysync-goals",
+  "studysync-streak",
+  "studysync-reminder-last-shown",
+  "studysync-theme",
+].forEach((key) => localStorage.removeItem(key));
 
   alert("All StudySync data has been deleted.");
   window.location.reload();
