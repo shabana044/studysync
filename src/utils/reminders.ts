@@ -1,6 +1,10 @@
 import { loadAssignments, loadExams } from "./storage";
 import { showNotification } from "./notifications";
 
+type ReminderOptions = {
+  showEmptyAlert?: boolean;
+};
+
 function parseLocalDate(dateString: string) {
   const [year, month, day] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day);
@@ -30,7 +34,7 @@ function isTomorrow(dateString: string) {
   );
 }
 
-export function checkStudyReminders() {
+export function checkStudyReminders(options: ReminderOptions = {}) {
   const assignments = loadAssignments();
   const exams = loadExams();
 
@@ -42,7 +46,10 @@ export function checkStudyReminders() {
   const examsTomorrow = exams.filter((exam) => isTomorrow(exam.date));
 
   if (assignmentsDueToday.length === 0 && examsTomorrow.length === 0) {
-    alert("No study reminders for now.");
+    if (options.showEmptyAlert) {
+      alert("No study reminders for now.");
+    }
+
     return;
   }
 
@@ -50,19 +57,17 @@ export function checkStudyReminders() {
 
   if (assignmentsDueToday.length > 0) {
     const message = `You have ${assignmentsDueToday.length} assignment(s) due today.`;
-
     messages.push(message);
-
     showNotification("Assignment Reminder", message);
   }
 
   if (examsTomorrow.length > 0) {
     const message = `You have ${examsTomorrow.length} exam(s) tomorrow.`;
-
     messages.push(message);
-
     showNotification("Exam Reminder", message);
   }
 
-  alert(messages.join("\n"));
+  if (options.showEmptyAlert) {
+    alert(messages.join("\n"));
+  }
 }

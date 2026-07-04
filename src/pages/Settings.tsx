@@ -86,7 +86,7 @@ function SettingsPage() {
     const permission = await requestNotificationPermission();
 
     if (permission === "granted") {
-      checkStudyReminders();
+      checkStudyReminders({ showEmptyAlert: true });
     }
   }
 

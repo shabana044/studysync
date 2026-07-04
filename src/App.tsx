@@ -1,14 +1,22 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout'
-import Dashboard from './pages/Dashboard'
-import Subjects from './pages/Subjects'
-import Assignments from './pages/Assignments'
-import Exams from './pages/Exams'
-import Calendar from './pages/Calendar'
-import Settings from './pages/Settings'
-import Productivity from './pages/Productivity'
+import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Dashboard from "./pages/Dashboard";
+import Subjects from "./pages/Subjects";
+import Assignments from "./pages/Assignments";
+import Exams from "./pages/Exams";
+import Calendar from "./pages/Calendar";
+import Settings from "./pages/Settings";
+import Productivity from "./pages/Productivity";
+import { checkStudyReminders } from "./utils/reminders";
 
 function App() {
+  useEffect(() => {
+    if ("Notification" in window && Notification.permission === "granted") {
+      checkStudyReminders();
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -23,7 +31,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
