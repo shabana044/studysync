@@ -1,75 +1,110 @@
-# React + TypeScript + Vite
+# StudySync
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+StudySync is a student planner web app built to help students manage subjects, assignments, exams, attendance, productivity, reminders, and study goals in one place.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Replace this with your live Vercel link:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+https://studysync-three-mauve.vercel.app/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Dashboard overview
+- Subject management
+- Attendance tracking
+- Assignment planner
+- Exam planner
+- Calendar view
+- Productivity tools
+- Daily planner
+- Pomodoro timer
+- Goals and streak tracking
+- Dark mode
+- Browser notifications
+- PWA install support
+- Export and import backup
+- Reset data option
+- LocalStorage data persistence
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Data Storage and Privacy
 
+StudySync is a frontend-only app. It does not use a backend or database.
+
+All user data is stored locally in the browser using LocalStorage. This means each user gets their own separate data on their own device/browser.
+
+For example, if another student opens the StudySync link on their laptop, resets the app, and adds their own subjects or assignments, it will only affect their browser. It will not change the data on my device.
+
+Because data is stored locally, users can export and import backups using the backup feature in the Settings page.
+
+## Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- LocalStorage
+- PWA / Service Worker
+
+## Pages
+
+- Dashboard
+- Subjects
+- Assignments
+- Exams
+- Calendar
+- Productivity
+- Settings
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/shabana044/studysync.git
 ```
+
+Go to the project folder:
+
+```bash
+cd studysync
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+Build the project:
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+## Project Purpose
+
+This project was created as a practical student productivity app and portfolio project. It focuses on real student needs such as attendance tracking, assignment planning, exam preparation, calendar organization, productivity tools, and local data backup.
+
+The app is designed so that anyone can open the live link and use it as their own planner. Since the data is stored locally in each browser, every user can maintain their own separate study data.
+
+## Author
+
+Shabana P  
+B.Tech Information Technology Student  
+Cochin University of Science and Technology
