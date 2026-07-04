@@ -2,6 +2,8 @@ import { useEffect, useState, type FormEvent } from "react";
 import FormActions from "../FormActions";
 import FormTitle from "../FormTitle";
 import Input from "../Input";
+import { subjects as sampleSubjects } from "../../data/sampleData";
+import { loadSubjects } from "../../utils/storage";
 import type { Assignment, NewAssignment } from "../../types/study";
 
 type AssignmentFormProps = {
@@ -25,6 +27,19 @@ function AssignmentForm({
   );
   const [status, setStatus] = useState<Assignment["status"]>(
     editingAssignment?.status ?? "pending"
+  );
+
+  const savedSubjectNames = loadSubjects().map((subject) => subject.name);
+  const sampleSubjectNames = sampleSubjects.map((subject) => subject.name);
+
+  const subjectOptions = Array.from(
+    new Set(
+      subjects.length > 0
+        ? subjects
+        : savedSubjectNames.length > 0
+        ? savedSubjectNames
+        : sampleSubjectNames
+    )
   );
 
   useEffect(() => {
@@ -56,7 +71,9 @@ function AssignmentForm({
 
   return (
     <div className="rounded-2xl border border-[var(--color-border)] bg-green-50 p-4 dark:border-slate-700 dark:bg-slate-800">
-      <FormTitle title={editingAssignment ? "Edit Assignment" : "Add Assignment"} />
+      <FormTitle
+        title={editingAssignment ? "Edit Assignment" : "Add Assignment"}
+      />
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
@@ -67,14 +84,18 @@ function AssignmentForm({
         />
 
         <div>
-          <label className="mb-1 block text-sm font-medium">Subject</label>
+          <label className="mb-1 block text-sm font-medium text-[var(--color-text)] dark:text-slate-100">
+            Subject
+          </label>
+
           <select
             value={subject}
             onChange={(event) => setSubject(event.target.value)}
             className="w-full rounded-lg border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
           >
             <option value="">Select a subject</option>
-            {subjects.map((subjectName) => (
+
+            {subjectOptions.map((subjectName) => (
               <option key={subjectName} value={subjectName}>
                 {subjectName}
               </option>
@@ -91,10 +112,15 @@ function AssignmentForm({
 
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <label className="mb-1 block text-sm font-medium">Priority</label>
+            <label className="mb-1 block text-sm font-medium text-[var(--color-text)] dark:text-slate-100">
+              Priority
+            </label>
+
             <select
               value={priority}
-              onChange={(event) => setPriority(event.target.value as Assignment["priority"])}
+              onChange={(event) =>
+                setPriority(event.target.value as Assignment["priority"])
+              }
               className="w-full rounded-lg border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             >
               <option value="high">High</option>
@@ -104,10 +130,15 @@ function AssignmentForm({
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">Status</label>
+            <label className="mb-1 block text-sm font-medium text-[var(--color-text)] dark:text-slate-100">
+              Status
+            </label>
+
             <select
               value={status}
-              onChange={(event) => setStatus(event.target.value as Assignment["status"])}
+              onChange={(event) =>
+                setStatus(event.target.value as Assignment["status"])
+              }
               className="w-full rounded-lg border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             >
               <option value="pending">Pending</option>
@@ -119,7 +150,7 @@ function AssignmentForm({
         <FormActions>
           <button
             type="submit"
-            className="rounded-xl bg-[var(--color-primary)] px-4 py-2 text-white transition hover:bg-indigo-700"
+            className="rounded-xl bg-[var(--color-primary)] px-4 py-2 text-white transition hover:bg-green-700"
           >
             {editingAssignment ? "Update Assignment" : "Save Assignment"}
           </button>

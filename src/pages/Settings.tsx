@@ -11,6 +11,7 @@ import {
   requestNotificationPermission,
   showNotification,
 } from "../utils/notifications";
+import { checkStudyReminders } from "../utils/reminders";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -71,13 +72,21 @@ function SettingsPage() {
   }
 
   async function handleTestNotification() {
+  const permission = await requestNotificationPermission();
+
+  if (permission === "granted") {
+    showNotification(
+      "StudySync Reminder",
+      "Notifications are working successfully!"
+    );
+  }
+}
+
+  async function handleCheckReminders() {
     const permission = await requestNotificationPermission();
 
     if (permission === "granted") {
-      showNotification(
-        "StudySync Reminder",
-        "Notifications are working successfully!"
-      );
+      checkStudyReminders();
     }
   }
 
@@ -91,6 +100,7 @@ function SettingsPage() {
             <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">
               Install
             </h2>
+
             <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
               Install StudySync to launch it like a desktop or mobile app.
             </p>
@@ -112,17 +122,27 @@ function SettingsPage() {
             <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">
               Notifications
             </h2>
+
             <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
-              Test browser notifications for reminders and study alerts.
+              Test browser notifications and check reminders for assignments and exams.
             </p>
           </div>
 
-          <button
-            onClick={handleTestNotification}
-            className="rounded-xl bg-[var(--color-primary)] px-4 py-3 font-semibold text-white transition hover:bg-green-700"
-          >
-            Test Notification
-          </button>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={handleTestNotification}
+              className="rounded-xl bg-[var(--color-primary)] px-4 py-3 font-semibold text-white transition hover:bg-green-700"
+            >
+              Test Notification
+            </button>
+
+            <button
+              onClick={handleCheckReminders}
+              className="rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
+            >
+              Check Study Reminders
+            </button>
+          </div>
         </div>
       </Card>
 
@@ -132,6 +152,7 @@ function SettingsPage() {
             <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">
               Appearance
             </h2>
+
             <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
               Choose how StudySync should look across the app.
             </p>
@@ -153,6 +174,7 @@ function SettingsPage() {
                 }`}
               >
                 <p className="font-semibold">{option.label}</p>
+
                 <p className="mt-1 text-sm text-[var(--color-muted)] dark:text-slate-300">
                   {option.value === "light" && "Use the light interface"}
                   {option.value === "dark" && "Use the dark interface"}
