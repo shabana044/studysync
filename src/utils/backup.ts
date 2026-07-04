@@ -1,4 +1,10 @@
 import {
+  ASSIGNMENTS_KEY,
+  EXAMS_KEY,
+  GOALS_KEY,
+  STREAK_KEY,
+  SUBJECTS_KEY,
+  TASKS_KEY,
   loadAssignments,
   loadExams,
   loadGoals,
@@ -30,4 +36,48 @@ export function exportStudySyncData() {
   link.click();
 
   URL.revokeObjectURL(url);
+}
+
+export function importStudySyncData(file: File) {
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(String(reader.result));
+
+      if (data.subjects) {
+        localStorage.setItem(SUBJECTS_KEY, JSON.stringify(data.subjects));
+      }
+
+      if (data.assignments) {
+        localStorage.setItem(
+          ASSIGNMENTS_KEY,
+          JSON.stringify(data.assignments)
+        );
+      }
+
+      if (data.exams) {
+        localStorage.setItem(EXAMS_KEY, JSON.stringify(data.exams));
+      }
+
+      if (data.tasks) {
+        localStorage.setItem(TASKS_KEY, JSON.stringify(data.tasks));
+      }
+
+      if (data.goals) {
+        localStorage.setItem(GOALS_KEY, JSON.stringify(data.goals));
+      }
+
+      if (typeof data.streak === "number") {
+        localStorage.setItem(STREAK_KEY, JSON.stringify(data.streak));
+      }
+
+      alert("Backup imported successfully. Refreshing app...");
+      window.location.reload();
+    } catch {
+      alert("Invalid backup file.");
+    }
+  };
+
+  reader.readAsText(file);
 }

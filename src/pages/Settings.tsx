@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
-import { exportStudySyncData } from "../utils/backup";
 import Card from "../components/Card";
+import {
+  exportStudySyncData,
+  importStudySyncData,
+} from "../utils/backup";
 import {
   applyTheme,
   getStoredTheme,
@@ -73,15 +76,15 @@ function SettingsPage() {
   }
 
   async function handleTestNotification() {
-  const permission = await requestNotificationPermission();
+    const permission = await requestNotificationPermission();
 
-  if (permission === "granted") {
-    showNotification(
-      "StudySync Reminder",
-      "Notifications are working successfully!"
-    );
+    if (permission === "granted") {
+      showNotification(
+        "StudySync Reminder",
+        "Notifications are working successfully!"
+      );
+    }
   }
-}
 
   async function handleCheckReminders() {
     const permission = await requestNotificationPermission();
@@ -146,26 +149,47 @@ function SettingsPage() {
           </div>
         </div>
       </Card>
-<Card>
-  <div className="space-y-4">
-    <div>
-      <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">
-        Backup
-      </h2>
 
-      <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
-        Export your StudySync data as a JSON backup file.
-      </p>
-    </div>
+      <Card>
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">
+              Backup
+            </h2>
 
-    <button
-      onClick={exportStudySyncData}
-      className="rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
-    >
-      Export Backup
-    </button>
-  </div>
-</Card>
+            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
+              Export or restore your StudySync data using a JSON backup file.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={exportStudySyncData}
+              className="rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
+            >
+              Export Backup
+            </button>
+
+            <label className="inline-block cursor-pointer rounded-xl bg-slate-600 px-4 py-3 font-semibold text-white transition hover:bg-slate-700">
+              Import Backup
+
+              <input
+                type="file"
+                accept="application/json"
+                className="hidden"
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+
+                  if (file) {
+                    importStudySyncData(file);
+                  }
+                }}
+              />
+            </label>
+          </div>
+        </div>
+      </Card>
+
       <Card>
         <div className="space-y-4">
           <div>
