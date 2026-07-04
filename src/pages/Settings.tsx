@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import Card from "../components/Card";
-import { applyTheme, getStoredTheme, setTheme, type ThemeOption } from "../utils/theme";
+import {
+  applyTheme,
+  getStoredTheme,
+  setTheme,
+  type ThemeOption,
+} from "../utils/theme";
+import {
+  requestNotificationPermission,
+  showNotification,
+} from "../utils/notifications";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -61,6 +70,17 @@ function SettingsPage() {
     setThemeState(nextTheme);
   }
 
+  async function handleTestNotification() {
+    const permission = await requestNotificationPermission();
+
+    if (permission === "granted") {
+      showNotification(
+        "StudySync Reminder",
+        "Notifications are working successfully!"
+      );
+    }
+  }
+
   return (
     <div className="space-y-8">
       <PageHeader title="Settings" />
@@ -68,14 +88,18 @@ function SettingsPage() {
       <Card>
         <div className="space-y-4">
           <div>
-            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">Install</h2>
-            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">Install StudySync to launch it like a desktop or mobile app.</p>
+            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">
+              Install
+            </h2>
+            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
+              Install StudySync to launch it like a desktop or mobile app.
+            </p>
           </div>
 
           <button
             onClick={handleInstall}
             disabled={!canInstall}
-            className="rounded-xl border border-[var(--color-primary)] bg-[var(--color-primary)] px-4 py-3 font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-xl border border-[var(--color-primary)] bg-[var(--color-primary)] px-4 py-3 font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {installLabel}
           </button>
@@ -85,8 +109,32 @@ function SettingsPage() {
       <Card>
         <div className="space-y-4">
           <div>
-            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">Appearance</h2>
-            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">Choose how StudySync should look across the app.</p>
+            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">
+              Notifications
+            </h2>
+            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
+              Test browser notifications for reminders and study alerts.
+            </p>
+          </div>
+
+          <button
+            onClick={handleTestNotification}
+            className="rounded-xl bg-[var(--color-primary)] px-4 py-3 font-semibold text-white transition hover:bg-green-700"
+          >
+            Test Notification
+          </button>
+        </div>
+      </Card>
+
+      <Card>
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">
+              Appearance
+            </h2>
+            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
+              Choose how StudySync should look across the app.
+            </p>
           </div>
 
           <div className="grid gap-3 md:grid-cols-3">

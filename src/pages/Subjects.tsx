@@ -18,7 +18,8 @@ function Subjects() {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [editingSubject, setEditingSubject] = useState<Subject | null>(null);
-const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
+  const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
+
   const savedSubjects = loadSubjects();
 
   const [subjectList, setSubjectList] = useState<Subject[]>(
@@ -72,24 +73,24 @@ const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
   }
 
   function handleDeleteSubject(id: string) {
-  const subject = subjectList.find((s) => s.id === id);
+    const subject = subjectList.find((s) => s.id === id);
 
-  if (subject) {
-    setSubjectToDelete(subject);
+    if (subject) {
+      setSubjectToDelete(subject);
+    }
   }
 
-}
-function confirmDeleteSubject() {
-  if (!subjectToDelete) return;
+  function confirmDeleteSubject() {
+    if (!subjectToDelete) return;
 
-  setSubjectList((previousSubjects) =>
-    previousSubjects.filter(
-      (subject) => subject.id !== subjectToDelete.id
-    )
-  );
+    setSubjectList((previousSubjects) =>
+      previousSubjects.filter(
+        (subject) => subject.id !== subjectToDelete.id
+      )
+    );
 
-  setSubjectToDelete(null);
-}
+    setSubjectToDelete(null);
+  }
 
   function handleEditSubject(subject: Subject) {
     setEditingSubject(subject);
@@ -130,13 +131,14 @@ function confirmDeleteSubject() {
           </Button>
         }
       />
+
       <ConfirmDialog
-  open={subjectToDelete !== null}
-  title="Delete Subject"
-  message={`Delete "${subjectToDelete?.name}"?`}
-  onConfirm={confirmDeleteSubject}
-  onCancel={() => setSubjectToDelete(null)}
-/>
+        open={subjectToDelete !== null}
+        title="Delete Subject"
+        message={`Delete "${subjectToDelete?.name}"?`}
+        onConfirm={confirmDeleteSubject}
+        onCancel={() => setSubjectToDelete(null)}
+      />
 
       <Modal open={showForm}>
         <SubjectForm
