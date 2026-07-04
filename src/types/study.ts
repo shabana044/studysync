@@ -54,6 +54,14 @@ export type StudyTask = {
   id: string
   title: string
   completed: boolean
+  date: string
+};
+
+export type Goal = {
+  id: string
+  title: string
+  completed: boolean
+  createdAt: string
 };
 
 export type EditingSubject = Subject | null;

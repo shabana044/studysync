@@ -50,7 +50,7 @@ function ExamForm({ onClose, onSubmit, editingExam, subjects }: ExamFormProps) {
   }
 
   return (
-    <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
+    <div className="rounded-2xl border border-[var(--color-border)] bg-green-50 p-4 dark:border-slate-700 dark:bg-slate-800">
       <FormTitle title={editingExam ? "Edit Exam" : "Add Exam"} />
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -59,7 +59,7 @@ function ExamForm({ onClose, onSubmit, editingExam, subjects }: ExamFormProps) {
           <select
             value={subject}
             onChange={(event) => setSubject(event.target.value)}
-            className="w-full rounded-lg border border-slate-300 p-2"
+            className="w-full rounded-lg border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
           >
             <option value="">Select a subject</option>
             {subjects.map((subjectName) => (
@@ -98,7 +98,7 @@ function ExamForm({ onClose, onSubmit, editingExam, subjects }: ExamFormProps) {
         <FormActions>
           <button
             type="submit"
-            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="rounded-xl bg-[var(--color-primary)] px-4 py-2 text-white transition hover:bg-indigo-700"
           >
             {editingExam ? "Update Exam" : "Save Exam"}
           </button>
@@ -106,7 +106,7 @@ function ExamForm({ onClose, onSubmit, editingExam, subjects }: ExamFormProps) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-slate-500 px-4 py-2 text-white hover:bg-slate-600"
+            className="rounded-xl bg-[var(--color-muted)] px-4 py-2 text-white transition hover:bg-slate-600"
           >
             Cancel
           </button>

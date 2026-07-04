@@ -31,12 +31,12 @@ function SubjectCard({ subject, onDelete, onEdit, onUpdateAttendance }: SubjectC
     <Card>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-2xl shadow-sm">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-green-50 text-2xl shadow-sm dark:bg-slate-700">
             {getSubjectIcon(subject.name)}
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-slate-900">{subject.name}</h3>
-            <p className="text-sm text-slate-600">
+            <h3 className="text-lg font-semibold text-[var(--color-text)]">{subject.name}</h3>
+            <p className="text-sm text-[var(--color-muted)]">
               {subject.attendedClasses} / {subject.totalClasses} classes attended
             </p>
           </div>
@@ -46,7 +46,7 @@ function SubjectCard({ subject, onDelete, onEdit, onUpdateAttendance }: SubjectC
 
       <AttendanceProgress percentage={percentage} />
 
-      <p className="mt-3 text-sm text-slate-600">
+      <p className="mt-3 text-sm text-[var(--color-muted)] dark:text-slate-300">
         {classesNeeded === 0
           ? "✅ Attendance is above 75%"
           : `📚 Attend the next ${classesNeeded} class${
@@ -57,14 +57,14 @@ function SubjectCard({ subject, onDelete, onEdit, onUpdateAttendance }: SubjectC
       <div className="mt-4 flex flex-wrap gap-2">
         <button
           onClick={() => onUpdateAttendance(subject.id, "attended")}
-          className="rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-emerald-700"
+          className="rounded-xl bg-[var(--color-secondary)] px-3 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
         >
           + Attended
         </button>
 
         <button
           onClick={() => onUpdateAttendance(subject.id, "total")}
-          className="rounded-xl bg-slate-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
+          className="rounded-xl bg-[var(--color-accent)] px-3 py-2 text-sm font-medium text-white transition hover:bg-amber-600"
         >
           + Class
         </button>
@@ -73,14 +73,14 @@ function SubjectCard({ subject, onDelete, onEdit, onUpdateAttendance }: SubjectC
       <div className="mt-4 flex flex-wrap gap-2">
         <button
           onClick={() => onEdit(subject)}
-          className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+          className="rounded-xl bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700"
         >
           Edit
         </button>
 
         <button
           onClick={() => onDelete(subject.id)}
-          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
+          className="rounded-xl bg-[var(--color-danger)] px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
         >
           Delete
         </button>

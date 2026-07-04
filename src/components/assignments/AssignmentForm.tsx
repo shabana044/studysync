@@ -55,7 +55,7 @@ function AssignmentForm({
   }
 
   return (
-    <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
+    <div className="rounded-2xl border border-[var(--color-border)] bg-green-50 p-4 dark:border-slate-700 dark:bg-slate-800">
       <FormTitle title={editingAssignment ? "Edit Assignment" : "Add Assignment"} />
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -71,7 +71,7 @@ function AssignmentForm({
           <select
             value={subject}
             onChange={(event) => setSubject(event.target.value)}
-            className="w-full rounded-lg border border-slate-300 p-2"
+            className="w-full rounded-lg border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
           >
             <option value="">Select a subject</option>
             {subjects.map((subjectName) => (
@@ -95,7 +95,7 @@ function AssignmentForm({
             <select
               value={priority}
               onChange={(event) => setPriority(event.target.value as Assignment["priority"])}
-              className="w-full rounded-lg border border-slate-300 p-2"
+              className="w-full rounded-lg border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             >
               <option value="high">High</option>
               <option value="medium">Medium</option>
@@ -108,7 +108,7 @@ function AssignmentForm({
             <select
               value={status}
               onChange={(event) => setStatus(event.target.value as Assignment["status"])}
-              className="w-full rounded-lg border border-slate-300 p-2"
+              className="w-full rounded-lg border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             >
               <option value="pending">Pending</option>
               <option value="completed">Completed</option>
@@ -119,7 +119,7 @@ function AssignmentForm({
         <FormActions>
           <button
             type="submit"
-            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="rounded-xl bg-[var(--color-primary)] px-4 py-2 text-white transition hover:bg-indigo-700"
           >
             {editingAssignment ? "Update Assignment" : "Save Assignment"}
           </button>
@@ -127,7 +127,7 @@ function AssignmentForm({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-slate-500 px-4 py-2 text-white hover:bg-slate-600"
+            className="rounded-xl bg-[var(--color-muted)] px-4 py-2 text-white transition hover:bg-slate-600"
           >
             Cancel
           </button>

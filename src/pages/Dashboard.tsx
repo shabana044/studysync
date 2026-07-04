@@ -52,7 +52,7 @@ function Dashboard() {
     <div className="space-y-8">
       <PageHeader title="Dashboard" />
 
-      <section className="rounded-3xl border border-slate-200/80 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 p-6 text-white shadow-lg">
+      <section className="rounded-2xl border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-primary)] via-green-600 to-emerald-700 p-6 text-white shadow-lg dark:border-slate-700">
         <p className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-100">Study overview</p>
         <h2 className="mt-2 text-2xl font-semibold">You are keeping everything on track.</h2>
         <p className="mt-2 max-w-2xl text-sm text-blue-50/90">
@@ -150,11 +150,11 @@ function Dashboard() {
         />
       </div>
 
-      <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-slate-900">Attendance Overview</h2>
-            <p className="text-sm text-slate-600">A quick view of how each subject is performing.</p>
+            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">Attendance Overview</h2>
+            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">A quick view of how each subject is performing.</p>
           </div>
         </div>
 

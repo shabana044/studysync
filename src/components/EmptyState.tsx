@@ -4,7 +4,7 @@ type EmptyStateProps = {
 
 function EmptyState({ message }: EmptyStateProps) {
   return (
-    <div className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-center text-slate-500">
+    <div className="rounded-2xl border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center text-[var(--color-muted)] shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
       {message}
     </div>
   );

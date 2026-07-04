@@ -4,6 +4,9 @@ import Dashboard from './pages/Dashboard'
 import Subjects from './pages/Subjects'
 import Assignments from './pages/Assignments'
 import Exams from './pages/Exams'
+import Calendar from './pages/Calendar'
+import Settings from './pages/Settings'
+import Productivity from './pages/Productivity'
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
           <Route path="subjects" element={<Subjects />} />
           <Route path="assignments" element={<Assignments />} />
           <Route path="exams" element={<Exams />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="productivity" element={<Productivity />} />
         </Route>
       </Routes>
     </BrowserRouter>

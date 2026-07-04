@@ -39,7 +39,7 @@ function SubjectForm({
   }
 
   return (
-    <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
+    <div className="rounded-2xl border border-[var(--color-border)] bg-green-50 p-4 dark:border-slate-700 dark:bg-slate-800">
       <FormTitle title={editingSubject ? "Edit Subject" : "Add Subject"} />
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -69,7 +69,7 @@ function SubjectForm({
         <FormActions>
           <button
             type="submit"
-            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="rounded-xl bg-[var(--color-primary)] px-4 py-2 text-white transition hover:bg-indigo-700"
           >
            {editingSubject ? "Update Subject" : "Save Subject"}
           </button>
@@ -77,7 +77,7 @@ function SubjectForm({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-slate-500 px-4 py-2 text-white hover:bg-slate-600"
+            className="rounded-xl bg-[var(--color-muted)] px-4 py-2 text-white transition hover:bg-slate-600"
           >
             Cancel
           </button>

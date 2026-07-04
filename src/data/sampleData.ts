@@ -43,5 +43,6 @@ export const studyTasks: StudyTask[] = [
     id: '1',
     title: 'Revise arrays and linked lists',
     completed: false,
+    date: '2026-07-04',
   },
 ]
