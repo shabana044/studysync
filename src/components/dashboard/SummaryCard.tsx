@@ -1,8 +1,8 @@
 type SummaryCardProps = {
-  title: string
-  value: string
-  description: string
-}
+  title: string;
+  value: string;
+  description: string;
+};
 
 function SummaryCard({ title, value, description }: SummaryCardProps) {
   return (
@@ -11,7 +11,7 @@ function SummaryCard({ title, value, description }: SummaryCardProps) {
       <p className="mt-2 text-3xl font-bold text-slate-900">{value}</p>
       <p className="mt-1 text-sm text-slate-600">{description}</p>
     </div>
-  )
+  );
 }
 
-export default SummaryCard
+export default SummaryCard;

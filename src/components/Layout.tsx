@@ -1,3 +1,4 @@
+import Container from "./Container";
 import { Link, Outlet } from "react-router-dom";
 
 function Layout() {
@@ -14,9 +15,11 @@ function Layout() {
         </nav>
       </header>
 
-      <main className="p-6">
-        <Outlet />
-      </main>
+      <main>
+  <Container>
+    <Outlet />
+  </Container>
+</main>
     </div>
   );
 }

@@ -30,4 +30,6 @@ export type StudyTask = {
   id: string
   title: string
   completed: boolean
-}
+};
+
+export type EditingSubject = Subject | null;

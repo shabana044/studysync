@@ -12,6 +12,7 @@ import { loadSubjects, saveSubjects } from "../utils/storage";
 
 function Subjects() {
   const [showForm, setShowForm] = useState(false);
+  const [editingSubject, setEditingSubject] = useState<Subject | null>(null);
 
   const savedSubjects = loadSubjects();
 
@@ -23,48 +24,81 @@ function Subjects() {
     saveSubjects(subjectList);
   }, [subjectList]);
 
-  function handleAddSubject(newSubject: NewSubject) {
-    const subject: Subject = {
-      id: Date.now().toString(),
-      ...newSubject,
-    };
+function handleAddSubject(newSubject: NewSubject) {
+  if (editingSubject) {
+    setSubjectList((previousSubjects) =>
+      previousSubjects.map((subject) =>
+        subject.id === editingSubject.id
+          ? {
+              ...subject,
+              ...newSubject,
+            }
+          : subject
+      )
+    );
 
-    setSubjectList((previousSubjects) => [
-      ...previousSubjects,
-      subject,
-    ]);
+    setEditingSubject(null);
+    return;
+  }
+
+  const subject: Subject = {
+    id: Date.now().toString(),
+    ...newSubject,
+  };
+
+  setSubjectList((previousSubjects) => [
+    ...previousSubjects,
+    subject,
+  ]);
+}
+
+  function handleDeleteSubject(id: string) {
+    setSubjectList((previousSubjects) =>
+      previousSubjects.filter((subject) => subject.id !== id)
+    );
+  }
+
+  function handleEditSubject(subject: Subject) {
+    setEditingSubject(subject);
+    setShowForm(true);
   }
 
   return (
     <div>
       <PageHeader
-  title="Subjects"
-  action={
-    <Button onClick={() => setShowForm(true)}>
-      Add Subject
-    </Button>
-  }
-/>
+        title="Subjects"
+        action={
+          <Button onClick={() => setShowForm(true)}>
+            Add Subject
+          </Button>
+        }
+      />
 
       <Modal open={showForm}>
-  <SubjectForm
-    onClose={() => setShowForm(false)}
-    onAddSubject={handleAddSubject}
-  />
-</Modal>
+        <SubjectForm
+  onClose={() => {
+    setShowForm(false);
+    setEditingSubject(null);
+  }}
+  onAddSubject={handleAddSubject}
+  editingSubject={editingSubject}
+/>
+      </Modal>
 
       {subjectList.length === 0 ? (
-  <EmptyState message="No subjects added yet." />
-) : (
-  <Grid>
-    {subjectList.map((subject) => (
-      <SubjectCard
-        key={subject.id}
-        subject={subject}
-      />
-    ))}
-  </Grid>
-)}
+        <EmptyState message="No subjects added yet." />
+      ) : (
+        <Grid>
+          {subjectList.map((subject) => (
+            <SubjectCard
+              key={subject.id}
+              subject={subject}
+              onDelete={handleDeleteSubject}
+              onEdit={handleEditSubject}
+            />
+          ))}
+        </Grid>
+      )}
     </div>
   );
 }
