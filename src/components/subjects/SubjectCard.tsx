@@ -10,9 +10,10 @@ type SubjectCardProps = {
   subject: Subject;
   onDelete: (id: string) => void;
   onEdit: (subject: Subject) => void;
+  onUpdateAttendance: (id: string, type: "attended" | "total") => void;
 };
 
-function SubjectCard({ subject, onDelete, onEdit }: SubjectCardProps) {
+function SubjectCard({ subject, onDelete, onEdit, onUpdateAttendance }: SubjectCardProps) {
   const percentage = calculateAttendancePercentage(
     subject.attendedClasses,
     subject.totalClasses
@@ -46,7 +47,21 @@ function SubjectCard({ subject, onDelete, onEdit }: SubjectCardProps) {
               classesNeeded > 1 ? "es" : ""
             } to reach 75%`}
       </p>
+<div className="mt-4 flex gap-2">
+  <button
+    onClick={() => onUpdateAttendance(subject.id, "attended")}
+    className="rounded-lg bg-green-600 px-3 py-2 text-sm text-white hover:bg-green-700"
+  >
+    + Attended
+  </button>
 
+  <button
+    onClick={() => onUpdateAttendance(subject.id, "total")}
+    className="rounded-lg bg-slate-600 px-3 py-2 text-sm text-white hover:bg-slate-700"
+  >
+    + Class
+  </button>
+</div>
       <button
         onClick={() => onEdit(subject)}
         className="mt-4 mr-3 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"

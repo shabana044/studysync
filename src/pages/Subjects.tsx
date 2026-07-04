@@ -62,6 +62,29 @@ function handleAddSubject(newSubject: NewSubject) {
     setEditingSubject(subject);
     setShowForm(true);
   }
+  function handleUpdateAttendance(
+  id: string,
+  type: "attended" | "total"
+) {
+  setSubjectList((previousSubjects) =>
+    previousSubjects.map((subject) => {
+      if (subject.id !== id) return subject;
+
+      if (type === "attended") {
+        return {
+          ...subject,
+          attendedClasses: subject.attendedClasses + 1,
+          totalClasses: subject.totalClasses + 1,
+        };
+      }
+
+      return {
+        ...subject,
+        totalClasses: subject.totalClasses + 1,
+      };
+    })
+  );
+}
 
   return (
     <div>
@@ -95,6 +118,7 @@ function handleAddSubject(newSubject: NewSubject) {
               subject={subject}
               onDelete={handleDeleteSubject}
               onEdit={handleEditSubject}
+              onUpdateAttendance={handleUpdateAttendance}
             />
           ))}
         </Grid>
