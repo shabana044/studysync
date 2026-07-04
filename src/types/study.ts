@@ -33,9 +33,21 @@ export type NewAssignment = {
 
 export type Exam = {
   id: string
-  title: string
   subject: string
+  examName: string
   date: string
+  time: string
+  location: string
+  notes: string
+}
+
+export type NewExam = {
+  subject: string
+  examName: string
+  date: string
+  time: string
+  location: string
+  notes: string
 }
 
 export type StudyTask = {

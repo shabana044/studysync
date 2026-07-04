@@ -6,7 +6,7 @@ type BadgeProps = {
 function Badge({ text, className }: BadgeProps) {
   return (
     <span
-      className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${className}`}
+      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold shadow-sm ${className}`}
     >
       {text}
     </span>

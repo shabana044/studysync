@@ -29,9 +29,12 @@ export const assignments: Assignment[] = [
 export const exams: Exam[] = [
   {
     id: '1',
-    title: 'Internal Exam 1',
     subject: 'Data Structures',
+    examName: 'Internal Exam 1',
     date: '2026-07-20',
+    time: '10:00',
+    location: 'Room 101',
+    notes: 'Bring calculator',
   },
 ]
 

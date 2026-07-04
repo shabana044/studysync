@@ -29,20 +29,22 @@ function SubjectCard({ subject, onDelete, onEdit, onUpdateAttendance }: SubjectC
 
   return (
     <Card>
-      <div className="flex items-center gap-3">
-        <span className="text-2xl">{getSubjectIcon(subject.name)}</span>
-        <h3 className="text-lg font-semibold">{subject.name}</h3>
-      </div>
-
-      <p className="mt-2 text-sm text-slate-600">
-        {subject.attendedClasses} / {subject.totalClasses} classes attended
-      </p>
-
-      <AttendanceProgress percentage={percentage} />
-
-      <div className="mt-3">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-2xl shadow-sm">
+            {getSubjectIcon(subject.name)}
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-slate-900">{subject.name}</h3>
+            <p className="text-sm text-slate-600">
+              {subject.attendedClasses} / {subject.totalClasses} classes attended
+            </p>
+          </div>
+        </div>
         <Badge text={status.label} className={status.color} />
       </div>
+
+      <AttendanceProgress percentage={percentage} />
 
       <p className="mt-3 text-sm text-slate-600">
         {classesNeeded === 0
@@ -51,34 +53,38 @@ function SubjectCard({ subject, onDelete, onEdit, onUpdateAttendance }: SubjectC
               classesNeeded > 1 ? "es" : ""
             } to reach 75%`}
       </p>
-<div className="mt-4 flex gap-2">
-  <button
-    onClick={() => onUpdateAttendance(subject.id, "attended")}
-    className="rounded-lg bg-green-600 px-3 py-2 text-sm text-white hover:bg-green-700"
-  >
-    + Attended
-  </button>
 
-  <button
-    onClick={() => onUpdateAttendance(subject.id, "total")}
-    className="rounded-lg bg-slate-600 px-3 py-2 text-sm text-white hover:bg-slate-700"
-  >
-    + Class
-  </button>
-</div>
-      <button
-        onClick={() => onEdit(subject)}
-        className="mt-4 mr-3 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-      >
-        Edit
-      </button>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button
+          onClick={() => onUpdateAttendance(subject.id, "attended")}
+          className="rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-emerald-700"
+        >
+          + Attended
+        </button>
 
-      <button
-        onClick={() => onDelete(subject.id)}
-        className="mt-4 rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-      >
-        Delete Subject
-      </button>
+        <button
+          onClick={() => onUpdateAttendance(subject.id, "total")}
+          className="rounded-xl bg-slate-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
+        >
+          + Class
+        </button>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button
+          onClick={() => onEdit(subject)}
+          className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+        >
+          Edit
+        </button>
+
+        <button
+          onClick={() => onDelete(subject.id)}
+          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
+        >
+          Delete
+        </button>
+      </div>
     </Card>
   );
 }

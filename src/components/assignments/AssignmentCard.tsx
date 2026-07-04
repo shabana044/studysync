@@ -20,34 +20,43 @@ function AssignmentCard({ assignment, onDelete, onEdit }: AssignmentCardProps) {
     completed: "bg-green-100 text-green-700",
   };
 
+  const dueDate = new Date(assignment.dueDate);
+  const today = new Date();
+  const diffTime = dueDate.getTime() - today.setHours(0, 0, 0, 0);
+  const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const isOverdue = daysRemaining < 0 && assignment.status !== "completed";
+
   return (
     <Card>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="text-lg font-semibold">{assignment.title}</h3>
+          <h3 className="text-lg font-semibold text-slate-900">{assignment.title}</h3>
           <p className="mt-1 text-sm text-slate-600">{assignment.subject}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Badge text={assignment.priority.toUpperCase()} className={priorityStyles[assignment.priority]} />
           <Badge text={assignment.status.toUpperCase()} className={statusStyles[assignment.status]} />
         </div>
       </div>
 
-      <p className="mt-4 text-sm text-slate-600">
-        Due: {assignment.dueDate}
-      </p>
+      <div className="mt-4 space-y-2 text-sm text-slate-600">
+        <p><span className="font-medium text-slate-800">Due:</span> {assignment.dueDate}</p>
+        <p className={isOverdue ? "font-semibold text-red-600" : "text-slate-600"}>
+          {isOverdue ? "Overdue" : `${Math.abs(daysRemaining)} day${Math.abs(daysRemaining) === 1 ? "" : "s"} ${daysRemaining >= 0 ? "remaining" : "past due"}`}
+        </p>
+      </div>
 
-      <div className="mt-5 flex gap-2">
+      <div className="mt-5 flex flex-wrap gap-2">
         <button
           onClick={() => onEdit(assignment)}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
         >
           Edit
         </button>
 
         <button
           onClick={() => onDelete(assignment.id)}
-          className="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600"
+          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
         >
           Delete
         </button>
