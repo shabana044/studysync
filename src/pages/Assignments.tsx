@@ -11,30 +11,41 @@ import AssignmentCard from "../components/assignments/AssignmentCard";
 import AssignmentForm from "../components/assignments/AssignmentForm";
 import { assignments as sampleAssignments } from "../data/sampleData";
 import type { Assignment, NewAssignment } from "../types/study";
-import { loadAssignments, loadSubjects, saveAssignments } from "../utils/storage";
+import {
+  ASSIGNMENTS_KEY,
+  loadAssignments,
+  loadSubjects,
+  saveAssignments,
+} from "../utils/storage";
 
 function Assignments() {
   const [showForm, setShowForm] = useState(false);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("dueDate");
-  const [editingAssignment, setEditingAssignment] = useState<Assignment | null>(null);
-  const [assignmentToDelete, setAssignmentToDelete] = useState<Assignment | null>(null);
-  const savedAssignments = loadAssignments();
-  const savedSubjects = loadSubjects();
+  const [editingAssignment, setEditingAssignment] =
+    useState<Assignment | null>(null);
+  const [assignmentToDelete, setAssignmentToDelete] =
+    useState<Assignment | null>(null);
 
-  const [assignmentList, setAssignmentList] = useState<Assignment[]>(
-    savedAssignments.length > 0 ? savedAssignments : sampleAssignments
-  );
+  const [assignmentList, setAssignmentList] = useState<Assignment[]>(() => {
+    const hasSavedAssignments =
+      localStorage.getItem(ASSIGNMENTS_KEY) !== null;
+
+    return hasSavedAssignments ? loadAssignments() : sampleAssignments;
+  });
 
   useEffect(() => {
     saveAssignments(assignmentList);
   }, [assignmentList]);
 
-  const subjectOptions = useMemo(() => savedSubjects.map((subject) => subject.name), [savedSubjects]);
+  const subjectOptions = useMemo(() => {
+    return loadSubjects().map((subject) => subject.name);
+  }, []);
 
   const filteredAssignments = [...assignmentList]
     .filter((assignment) => {
       const query = search.toLowerCase();
+
       return (
         assignment.title.toLowerCase().includes(query) ||
         assignment.subject.toLowerCase().includes(query)
@@ -80,7 +91,10 @@ function Assignments() {
       ...newAssignment,
     };
 
-    setAssignmentList((previousAssignments) => [assignment, ...previousAssignments]);
+    setAssignmentList((previousAssignments) => [
+      assignment,
+      ...previousAssignments,
+    ]);
   }
 
   function handleDeleteAssignment(id: string) {
@@ -95,7 +109,9 @@ function Assignments() {
     if (!assignmentToDelete) return;
 
     setAssignmentList((previousAssignments) =>
-      previousAssignments.filter((assignment) => assignment.id !== assignmentToDelete.id)
+      previousAssignments.filter(
+        (assignment) => assignment.id !== assignmentToDelete.id
+      )
     );
 
     setAssignmentToDelete(null);
@@ -111,7 +127,9 @@ function Assignments() {
       <PageHeader
         title="Assignments"
         action={
-          <Button onClick={() => setShowForm(true)}>Add Assignment</Button>
+          <Button onClick={() => setShowForm(true)}>
+            Add Assignment
+          </Button>
         }
       />
 
