@@ -3,11 +3,20 @@ import { showNotification } from "./notifications";
 
 type ReminderOptions = {
   showEmptyAlert?: boolean;
+  skipIfShownToday?: boolean;
 };
+
+const REMINDER_LAST_SHOWN_KEY = "studysync-reminder-last-shown";
 
 function parseLocalDate(dateString: string) {
   const [year, month, day] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day);
+}
+
+function getTodayKey() {
+  const today = new Date();
+
+  return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 }
 
 function isToday(dateString: string) {
@@ -35,6 +44,15 @@ function isTomorrow(dateString: string) {
 }
 
 export function checkStudyReminders(options: ReminderOptions = {}) {
+  const todayKey = getTodayKey();
+
+  if (
+    options.skipIfShownToday &&
+    localStorage.getItem(REMINDER_LAST_SHOWN_KEY) === todayKey
+  ) {
+    return;
+  }
+
   const assignments = loadAssignments();
   const exams = loadExams();
 
@@ -66,6 +84,8 @@ export function checkStudyReminders(options: ReminderOptions = {}) {
     messages.push(message);
     showNotification("Exam Reminder", message);
   }
+
+  localStorage.setItem(REMINDER_LAST_SHOWN_KEY, todayKey);
 
   if (options.showEmptyAlert) {
     alert(messages.join("\n"));

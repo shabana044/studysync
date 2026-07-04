@@ -13,7 +13,7 @@ import { checkStudyReminders } from "./utils/reminders";
 function App() {
   useEffect(() => {
     if ("Notification" in window && Notification.permission === "granted") {
-      checkStudyReminders();
+      checkStudyReminders({ skipIfShownToday: true });
     }
   }, []);
 
