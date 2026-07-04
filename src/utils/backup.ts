@@ -81,3 +81,15 @@ export function importStudySyncData(file: File) {
 
   reader.readAsText(file);
 }
+export function resetStudySyncData() {
+  const confirmed = confirm(
+    "Are you sure you want to delete all StudySync data? This cannot be undone."
+  );
+
+  if (!confirmed) return;
+
+  localStorage.clear();
+
+  alert("All StudySync data has been deleted.");
+  window.location.reload();
+}

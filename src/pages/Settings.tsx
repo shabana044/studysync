@@ -4,6 +4,7 @@ import Card from "../components/Card";
 import {
   exportStudySyncData,
   importStudySyncData,
+  resetStudySyncData,
 } from "../utils/backup";
 import {
   applyTheme,
@@ -189,7 +190,26 @@ function SettingsPage() {
           </div>
         </div>
       </Card>
+<Card>
+  <div className="space-y-4">
+    <div>
+      <h2 className="text-xl font-semibold text-red-600">
+        Danger Zone
+      </h2>
 
+      <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
+        Permanently delete all StudySync data from this browser.
+      </p>
+    </div>
+
+    <button
+      onClick={resetStudySyncData}
+      className="rounded-xl bg-red-600 px-4 py-3 font-semibold text-white transition hover:bg-red-700"
+    >
+      Reset All Data
+    </button>
+  </div>
+</Card>
       <Card>
         <div className="space-y-4">
           <div>
