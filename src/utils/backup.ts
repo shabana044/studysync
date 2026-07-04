@@ -89,12 +89,12 @@ export function resetStudySyncData() {
   if (!confirmed) return;
 
   [
-  "studysync-subjects",
-  "studysync-assignments",
-  "studysync-exams",
-  "studysync-tasks",
-  "studysync-goals",
-  "studysync-streak",
+  SUBJECTS_KEY,
+  ASSIGNMENTS_KEY,
+  EXAMS_KEY,
+  TASKS_KEY,
+  GOALS_KEY,
+  STREAK_KEY,
   "studysync-reminder-last-shown",
   "studysync-theme",
 ].forEach((key) => localStorage.removeItem(key));

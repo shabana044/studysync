@@ -11,7 +11,11 @@ import SearchBar from "../components/SearchBar";
 import ConfirmDialog from "../components/ConfirmDialog";
 import SortSelect from "../components/SortSelect";
 import type { Subject, NewSubject } from "../types/study";
-import { loadSubjects, saveSubjects } from "../utils/storage";
+import {
+  SUBJECTS_KEY,
+  loadSubjects,
+  saveSubjects,
+} from "../utils/storage";
 
 function Subjects() {
   const [showForm, setShowForm] = useState(false);
@@ -20,11 +24,11 @@ function Subjects() {
   const [editingSubject, setEditingSubject] = useState<Subject | null>(null);
   const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
 
-  const savedSubjects = loadSubjects();
+  const [subjectList, setSubjectList] = useState<Subject[]>(() => {
+    const hasSavedSubjects = localStorage.getItem(SUBJECTS_KEY) !== null;
 
-  const [subjectList, setSubjectList] = useState<Subject[]>(
-    savedSubjects.length > 0 ? savedSubjects : sampleSubjects
-  );
+    return hasSavedSubjects ? loadSubjects() : sampleSubjects;
+  });
 
   useEffect(() => {
     saveSubjects(subjectList);
@@ -36,8 +40,11 @@ function Subjects() {
     )
     .sort((a, b) => {
       if (sortBy === "attendance") {
-        const attendanceA = a.attendedClasses / a.totalClasses;
-        const attendanceB = b.attendedClasses / b.totalClasses;
+        const attendanceA =
+          a.totalClasses === 0 ? 0 : a.attendedClasses / a.totalClasses;
+        const attendanceB =
+          b.totalClasses === 0 ? 0 : b.attendedClasses / b.totalClasses;
+
         return attendanceB - attendanceA;
       }
 
@@ -73,7 +80,7 @@ function Subjects() {
   }
 
   function handleDeleteSubject(id: string) {
-    const subject = subjectList.find((s) => s.id === id);
+    const subject = subjectList.find((item) => item.id === id);
 
     if (subject) {
       setSubjectToDelete(subject);
@@ -158,11 +165,16 @@ function Subjects() {
           <SearchBar
             value={search}
             onChange={setSearch}
+            placeholder="Search subjects..."
           />
 
           <SortSelect
             value={sortBy}
             onChange={setSortBy}
+            options={[
+              { value: "name", label: "Sort by Name" },
+              { value: "attendance", label: "Sort by Attendance" },
+            ]}
           />
 
           <Grid>
