@@ -11,12 +11,24 @@ export type NewSubject = {
   attendedClasses: number
 }
 
+export type AssignmentPriority = "high" | "medium" | "low";
+export type AssignmentStatus = "pending" | "completed";
+
 export type Assignment = {
   id: string
   title: string
   subject: string
   dueDate: string
-  completed: boolean
+  priority: AssignmentPriority
+  status: AssignmentStatus
+}
+
+export type NewAssignment = {
+  title: string
+  subject: string
+  dueDate: string
+  priority: AssignmentPriority
+  status: AssignmentStatus
 }
 
 export type Exam = {

@@ -3,6 +3,7 @@ import Badge from "../Badge";
 import AttendanceProgress from "./AttendanceProgress";
 import type { Subject } from "../../types/study";
 import { calculateAttendancePercentage } from "../../utils/attendance";
+import { getSubjectIcon } from "../../utils/subjectIcons";
 import { classesNeededFor75Percent } from "../../utils/attendancePrediction";
 import { getAttendanceStatus } from "../../utils/attendanceStatus";
 
@@ -28,7 +29,10 @@ function SubjectCard({ subject, onDelete, onEdit, onUpdateAttendance }: SubjectC
 
   return (
     <Card>
-      <h3 className="text-lg font-semibold">{subject.name}</h3>
+      <div className="flex items-center gap-3">
+        <span className="text-2xl">{getSubjectIcon(subject.name)}</span>
+        <h3 className="text-lg font-semibold">{subject.name}</h3>
+      </div>
 
       <p className="mt-2 text-sm text-slate-600">
         {subject.attendedClasses} / {subject.totalClasses} classes attended

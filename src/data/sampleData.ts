@@ -21,7 +21,8 @@ export const assignments: Assignment[] = [
     title: 'OS Lab Record',
     subject: 'Operating Systems',
     dueDate: '2026-07-10',
-    completed: false,
+    priority: 'high',
+    status: 'pending',
   },
 ]
 
