@@ -3,12 +3,58 @@ import PageHeader from "../components/PageHeader";
 import Card from "../components/Card";
 import { applyTheme, getStoredTheme, setTheme, type ThemeOption } from "../utils/theme";
 
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+  prompt(): Promise<void>;
+}
+
+declare global {
+  interface Window {
+    deferredPrompt?: BeforeInstallPromptEvent;
+  }
+}
+
 function SettingsPage() {
   const [theme, setThemeState] = useState<ThemeOption>(() => getStoredTheme());
+  const [canInstall, setCanInstall] = useState(false);
+  const [installLabel, setInstallLabel] = useState("Install StudySync");
 
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    const handler = (event: Event) => {
+      event.preventDefault();
+      window.deferredPrompt = event as BeforeInstallPromptEvent;
+      setCanInstall(true);
+      setInstallLabel("Install StudySync");
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  async function handleInstall() {
+    if (!window.deferredPrompt) {
+      setInstallLabel("This browser does not support installation yet");
+      return;
+    }
+
+    window.deferredPrompt.prompt();
+    const result = await window.deferredPrompt.userChoice;
+
+    if (result.outcome === "accepted") {
+      setInstallLabel("StudySync installed");
+    } else {
+      setInstallLabel("Install cancelled");
+    }
+
+    window.deferredPrompt = undefined;
+    setCanInstall(false);
+  }
 
   function handleThemeChange(nextTheme: ThemeOption) {
     setTheme(nextTheme);
@@ -18,6 +64,23 @@ function SettingsPage() {
   return (
     <div className="space-y-8">
       <PageHeader title="Settings" />
+
+      <Card>
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">Install</h2>
+            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">Install StudySync to launch it like a desktop or mobile app.</p>
+          </div>
+
+          <button
+            onClick={handleInstall}
+            disabled={!canInstall}
+            className="rounded-xl border border-[var(--color-primary)] bg-[var(--color-primary)] px-4 py-3 font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {installLabel}
+          </button>
+        </div>
+      </Card>
 
       <Card>
         <div className="space-y-4">

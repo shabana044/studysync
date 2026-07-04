@@ -7,6 +7,14 @@ import { applyTheme, getStoredTheme } from './utils/theme'
 
 applyTheme(getStoredTheme())
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      console.warn('Service worker registration failed');
+    });
+  });
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
