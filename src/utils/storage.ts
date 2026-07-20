@@ -6,12 +6,43 @@ export const EXAMS_KEY = "studysync-exams";
 export const TASKS_KEY = "studysync-tasks";
 export const GOALS_KEY = "studysync-goals";
 export const STREAK_KEY = "studysync-streak";
+export const LAST_UPDATED_KEY = "studysync-last-updated";
+
+export function updateLastUpdated() {
+  localStorage.setItem(LAST_UPDATED_KEY, new Date().toISOString());
+}
+
+export function loadLastUpdated(): string | null {
+  return localStorage.getItem(LAST_UPDATED_KEY);
+}
+
+export function formatLastUpdated(value: string | null) {
+  if (!value) {
+    return "Not updated yet";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Not updated yet";
+  }
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }).format(date);
+}
 
 export function saveSubjects(subjects: Subject[]) {
   localStorage.setItem(
     SUBJECTS_KEY,
     JSON.stringify(subjects)
   );
+  updateLastUpdated();
 }
 
 export function loadSubjects(): Subject[] {
@@ -29,6 +60,7 @@ export function saveAssignments(assignments: Assignment[]) {
     ASSIGNMENTS_KEY,
     JSON.stringify(assignments)
   );
+  updateLastUpdated();
 }
 
 export function loadAssignments(): Assignment[] {
@@ -46,6 +78,7 @@ export function saveExams(exams: Exam[]) {
     EXAMS_KEY,
     JSON.stringify(exams)
   );
+  updateLastUpdated();
 }
 
 export function loadExams(): Exam[] {
@@ -60,6 +93,7 @@ export function loadExams(): Exam[] {
 
 export function saveTasks(tasks: StudyTask[]) {
   localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+  updateLastUpdated();
 }
 
 export function loadTasks(): StudyTask[] {
@@ -74,6 +108,7 @@ export function loadTasks(): StudyTask[] {
 
 export function saveGoals(goals: Goal[]) {
   localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+  updateLastUpdated();
 }
 
 export function loadGoals(): Goal[] {
@@ -88,6 +123,7 @@ export function loadGoals(): Goal[] {
 
 export function saveStreak(streak: number) {
   localStorage.setItem(STREAK_KEY, JSON.stringify(streak));
+  updateLastUpdated();
 }
 
 export function loadStreak(): number {

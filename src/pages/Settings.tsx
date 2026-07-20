@@ -12,6 +12,7 @@ import {
   setTheme,
   type ThemeOption,
 } from "../utils/theme";
+import { formatLastUpdated, loadLastUpdated } from "../utils/storage";
 import {
   requestNotificationPermission,
   showNotification,
@@ -34,10 +35,15 @@ function SettingsPage() {
   const [theme, setThemeState] = useState<ThemeOption>(() => getStoredTheme());
   const [canInstall, setCanInstall] = useState(false);
   const [installLabel, setInstallLabel] = useState("Install StudySync");
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    setLastUpdated(loadLastUpdated());
+  }, []);
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -98,6 +104,17 @@ function SettingsPage() {
   return (
     <div className="space-y-8">
       <PageHeader title="Settings" />
+
+      <Card>
+        <div className="space-y-2">
+          <div>
+            <h2 className="text-xl font-semibold text-[var(--color-text)] dark:text-slate-100">App Data</h2>
+            <p className="text-sm text-[var(--color-muted)] dark:text-slate-300">
+              Last updated: {formatLastUpdated(lastUpdated)}
+            </p>
+          </div>
+        </div>
+      </Card>
 
       <Card>
         <div className="space-y-4">

@@ -4,7 +4,14 @@ import EmptyState from "../components/EmptyState";
 import PageHeader from "../components/PageHeader";
 import AttendanceChart from "../components/dashboard/AttendanceChart";
 import SummaryCard from "../components/dashboard/SummaryCard";
-import { loadAssignments, loadExams, loadSubjects, loadTasks } from "../utils/storage";
+import {
+  formatLastUpdated,
+  loadAssignments,
+  loadExams,
+  loadLastUpdated,
+  loadSubjects,
+  loadTasks,
+} from "../utils/storage";
 
 function formatDateLabel(value: string) {
   const date = new Date(`${value}T00:00:00`);
@@ -30,6 +37,7 @@ function Dashboard() {
   const assignments = loadAssignments();
   const exams = loadExams();
   const tasks = loadTasks();
+  const lastUpdated = loadLastUpdated();
 
   const today = new Date();
   const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
@@ -136,6 +144,9 @@ function Dashboard() {
             <h2 className="mt-2 text-2xl font-semibold">Your week is looking organized.</h2>
             <p className="mt-2 max-w-2xl text-sm text-emerald-50/90">
               Keep an eye on today&apos;s plan, upcoming deadlines, and subjects that need extra attention.
+            </p>
+            <p className="mt-4 text-sm text-emerald-100/90">
+              Last updated: {formatLastUpdated(lastUpdated)}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

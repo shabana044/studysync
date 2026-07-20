@@ -2,15 +2,18 @@ import {
   ASSIGNMENTS_KEY,
   EXAMS_KEY,
   GOALS_KEY,
+  LAST_UPDATED_KEY,
   STREAK_KEY,
   SUBJECTS_KEY,
   TASKS_KEY,
   loadAssignments,
   loadExams,
   loadGoals,
+  loadLastUpdated,
   loadStreak,
   loadSubjects,
   loadTasks,
+  updateLastUpdated,
 } from "./storage";
 
 export function exportStudySyncData() {
@@ -21,6 +24,7 @@ export function exportStudySyncData() {
     tasks: loadTasks(),
     goals: loadGoals(),
     streak: loadStreak(),
+    lastUpdated: loadLastUpdated(),
     exportedAt: new Date().toISOString(),
   };
 
@@ -72,6 +76,12 @@ export function importStudySyncData(file: File) {
         localStorage.setItem(STREAK_KEY, JSON.stringify(data.streak));
       }
 
+      if (data.lastUpdated) {
+        localStorage.setItem(LAST_UPDATED_KEY, String(data.lastUpdated));
+      } else {
+        updateLastUpdated();
+      }
+
       alert("Backup imported successfully. Refreshing app...");
       window.location.reload();
     } catch {
@@ -94,6 +104,7 @@ export function resetStudySyncData() {
   localStorage.setItem(TASKS_KEY, JSON.stringify([]));
   localStorage.setItem(GOALS_KEY, JSON.stringify([]));
   localStorage.setItem(STREAK_KEY, JSON.stringify(0));
+  updateLastUpdated();
 
   localStorage.removeItem("studysync-reminder-last-shown");
   localStorage.removeItem("studysync-theme");
